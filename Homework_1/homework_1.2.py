@@ -1,0 +1,30 @@
+# Импортируем опции селениума
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+
+
+# Прокидываем нужные настройки
+options = Options()
+options.add_argument("--start-maximized")
+options.add_argument("--disable-notifications")
+
+# Обозначаем УРЛ
+driver = webdriver.Chrome(options=options)
+driver.get("https://the-internet.herokuapp.com/checkboxes")
+
+# Проверяем чек-боксы
+checkbox_1 = driver.find_element(By.XPATH, "//input[1]")
+checkbox_2 = (driver.find_element(By.XPATH, "//input[2]"))
+# Проверяем состояние чек-боксо
+assert checkbox_1.is_selected() == False
+assert checkbox_2.is_selected() == True
+
+# Включаем/Выключаем чек-боксы
+checkbox_1.click()
+checkbox_2.click()
+# Проверяем состояние чек-боксо
+assert checkbox_1.is_selected() == True
+assert checkbox_2.is_selected() == False
+
+driver.quit()
